@@ -13,15 +13,16 @@
 if "%1"=="" (call :errorMsg "paramCount NOT DEFINED") else (set paramCount=%1)
 if "%2"=="" (call :errorMsg "objMethod NOT DEFINED") else (set objMethod=%2)
 (shift /1)& (shift /1)
-(if %paramCount% GEQ 1 if "%~1"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 2 if "%~2"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 3 if "%~3"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 4 if "%~4"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 5 if "%~5"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 6 if "%~6"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 7 if "%~7"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 8 if "%~8"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
-(if %paramCount% GEQ 9 if "%~9"=="" call :errorMsg "objMethod[%objMethod%]: param%paramCount% NOT DEFINED")
+set errorMsg="objMethod[%objMethod%]: param%paramCount% NOT DEFINED"
+(if %paramCount% GEQ 1 if "%~1"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 2 if "%~2"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 3 if "%~3"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 4 if "%~4"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 5 if "%~5"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 6 if "%~6"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 7 if "%~7"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 8 if "%~8"=="" call :errorMsg %errorMsg%)
+(if %paramCount% GEQ 9 if "%~9"=="" call :errorMsg %errorMsg%)
 goto :EOF
 
 
