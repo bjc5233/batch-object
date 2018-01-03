@@ -16,4 +16,15 @@ call object.bat type listObj
 %listObj.add% 你好
 ::调用toString方法打印对象
 %listObj.toString%
+::    ========>输出结果
+::        list
+::        listObj:
+::        {
+::            size:2
+::            objectType:list
+::            [
+::                123
+::                你好
+::            ]
+::        }
 ```
