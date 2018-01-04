@@ -63,7 +63,3 @@ for /f "tokens=1* delims==" %%i in (%~3) do (
     )
 )
 goto :EOF
-
-
-:errorMsg
-echo errorMsg:& echo     %~1& pause>nul& exit
