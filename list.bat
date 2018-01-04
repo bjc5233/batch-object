@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _checkObjParams _true _false _ifOr
+@echo off& call loadF.bat _checkObjParams _true _false _ifOr _errorMsg
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-list对象
@@ -15,10 +15,14 @@
 ::  date       2018-01-03 14:08:44
 ::  face       (ΘｏΘ)
 ::  weather    小雨转中雨 9℃/5℃ 东北风
-set functions=new add addAt isEmpty size sizePrint contains get getPrint indexOf indexOfPrint remove removeAt toString clear set
+set functions=help new add addAt isEmpty size sizePrint contains get getPrint indexOf indexOfPrint remove removeAt toString clear set
 if "%1"=="" goto :EOF
-goto :%1>nul 2>nul& call :errorMsg "method[%1] NOT DEFINED"
+goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
+
+:help
+echo available method: [%functions%]
+pause>nul& goto :EOF
 
 :new
 ::[new] [listObj]
@@ -42,7 +46,7 @@ goto :EOF
 call set _list_field_size=%%%2._field_size%%
 set /a _list_max_index=_list_field_size-1
 (set or1=%3 GTR %_list_max_index%& set or2=%3 LSS 0& call %_ifOr% _list_flag 2)
-(%_list_flag%) && (call :errorMsg "method[%1]: index MUST BE BETWEEN 0 AND %_list_max_index%")
+(%_list_flag%) && (call %_errorMsg% %0 "method[%1]: index MUST BE BETWEEN 0 AND %_list_max_index%")
 
 set /a _list_add_index=%3+1
 setlocal enabledelayedexpansion
@@ -175,11 +179,3 @@ for /l %%i in (0,1,%maxIndex%) do call echo         %%%2._data_%%i%%
 echo     ]
 echo }
 goto :EOF
-
-
-
-
-
-
-:errorMsg
-echo errorMsg:& echo     %~1& pause>nul& exit
