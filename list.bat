@@ -66,7 +66,7 @@ goto :EOF
 (call %_checkObjParams% 2 %*)
 call set _list_field_size=%%%2._field_size%%
 (set or1="%_list_field_size%"==""& set or2=%_list_field_size%==0& call %_ifOr% _empty_flag 2)
-(%_empty_flag%) && (set "%3=%_true%") || (set "%3=%_false%")
+if defined _empty_flag (set "%3=%_true%") else (set "%3=%_false%")
 goto :EOF
 
 
