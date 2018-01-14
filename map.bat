@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _checkObjParams _true _false
+@echo off& call loadF.bat _checkObjParams _true _false _errorMsg
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-map对象
@@ -17,8 +17,12 @@
 ::  weather    小雨转中雨 9℃/6℃ 东南风
 set functions=new put get getPrint size sizePrint containsKey containsKeyPrint toString clear containsValue containsValuePrint remove
 if "%1"=="" goto :EOF
-goto :%1>nul 2>nul& call :errorMsg "method[%1] NOT DEFINED"
+goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
+
+:help
+echo available method: [%functions%]
+pause>nul& goto :EOF
 
 :new
 ::[new] [mapObj]
@@ -122,8 +126,3 @@ endlocal
 echo     }
 echo }
 goto :EOF
-
-
-
-:errorMsg
-echo errorMsg:& echo     %~1& pause>nul& exit

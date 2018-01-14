@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _checkObjParams
+@echo off& call loadF.bat _checkObjParams _errorMsg
 ::说明
 ::  batch-object对象
 ::规则
@@ -14,10 +14,14 @@
 ::  date       2018-01-03 19:21:34
 ::  face       ●︿●
 ::  weather    小雨转中雨 9℃/6℃ 东北风
-set functions=new fun1 fun2
+set functions=new type readObject writeObject
 if "%1"=="" goto :EOF
-goto :%1>nul 2>nul& call :errorMsg "method[%1] NOT DEFINED"
+goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
+
+:help
+echo available method: [%functions%]
+pause>nul& goto :EOF
 
 
 :new
@@ -26,14 +30,6 @@ goto :%1>nul 2>nul& call :errorMsg "method[%1] NOT DEFINED"
 set %2._field_object_type=object& set %2._functions=%functions%
 for %%i in (%functions%) do set "%2.%%i=call object %%i %2"
 goto :EOF
-
-
-:fun1
-echo call fun1, params:%*& goto :EOF
-
-:fun2
-echo call fun1, params:%*& goto :EOF
-
 
 
 :type
@@ -55,7 +51,6 @@ setlocal enabledelayedexpansion
 	for %%i in (!%2._functions!) do echo %%i=call !%2._field_object_type! %%i
 	for /f "tokens=2* delims=.=" %%i in ('set %2._data_') do echo %%i=%%j
 )>"%~3"& endlocal & goto :EOF
-
 
 
 
