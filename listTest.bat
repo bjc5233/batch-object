@@ -1,6 +1,6 @@
 @echo off
 call list new listObj
-call object type listObj
+%listObj.type%
 echo ==================================
 echo add 123
 %listObj.add% 123
@@ -65,11 +65,8 @@ echo set 0 456
 %listObj.toString% listObj
 
 echo ==================================
-set base=
-
-
 echo writeObject "%~d0%~p0listSaved.txt"
-call object writeObject listObj "%~d0%~p0listSaved.txt"
+%listObj.writeObject% "%~d0%~p0listSaved.txt"
 echo ==================================
 pause>nul& goto :EOF
 

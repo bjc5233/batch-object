@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _checkObjParams _true _false _ifOr _errorMsg
+@echo off& call loadF.bat _checkObjParams _true _false _ifOr _errorMsg _objExtend
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-list对象
@@ -15,20 +15,23 @@
 ::  date       2018-01-03 14:08:44
 ::  face       (ΘｏΘ)
 ::  weather    小雨转中雨 9℃/5℃ 东北风
-set functions=help new add addAt isEmpty size sizePrint contains get getPrint indexOf indexOfPrint remove removeAt toString clear set
+set _list_functions=help new add addAt isEmpty size sizePrint contains get getPrint indexOf indexOfPrint remove removeAt toString clear set
 if "%1"=="" goto :EOF
 goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
 
+
 :help
-echo available method: [%functions%]
+echo available method: [%_list_functions%]
 pause>nul& goto :EOF
+
 
 :new
 ::[new] [listObj]
 (call %_checkObjParams% 1 %*)
-set %2._field_size=0& set %2._field_object_type=list& set %2._functions=%functions%
-for %%i in (%functions%) do set "%2.%%i=call %~f0 %%i %2"
+call %_objExtend% %2 "C:\path\bat\object\object.bat"
+set %2._field_size=0& set %2._field_object_type=list& set %2._functions=%_list_functions%
+for %%i in (%_list_functions%) do set "%2.%%i=call %~f0 %%i %2"
 goto :EOF
 
 

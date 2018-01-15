@@ -14,21 +14,21 @@
 ::  date       2018-01-03 19:21:34
 ::  face       ●︿●
 ::  weather    小雨转中雨 9℃/6℃ 东北风
-set functions=new type readObject writeObject
+set _object_functions=new type readObject writeObject
 if "%1"=="" goto :EOF
 goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
 
 :help
-echo available method: [%functions%]
+echo available method: [%_object_functions%]
 pause>nul& goto :EOF
 
 
 :new
 ::[new] [objectName]
 (call %_checkObjParams% 1 %*)
-set %2._field_object_type=object& set %2._functions=%functions%
-for %%i in (%functions%) do set "%2.%%i=call object %%i %2"
+set %2._field_object_type=object& set %2._functions=%_object_functions%
+for %%i in (%_object_functions%) do set "%2.%%i=call %~f0 %%i %2"
 goto :EOF
 
 

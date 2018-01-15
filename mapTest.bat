@@ -1,6 +1,6 @@
 @echo off
 call map new mapObj
-call object type mapObj
+%mapObj.type%
 echo ==================================
 echo put(1,123)
 %mapObj.put% 1 123
@@ -28,6 +28,6 @@ echo sizePrint=
 %mapObj.sizePrint%
 echo ==================================
 echo writeObject "%~d0%~p0mapSaved.txt"
-call object writeObject mapObj "%~d0%~p0mapSaved.txt"
+%mapObj.writeObject% "%~d0%~p0mapSaved.txt"
 echo ==================================
 pause>nul& goto :EOF
