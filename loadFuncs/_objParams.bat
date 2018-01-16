@@ -10,9 +10,9 @@
 ::  date       2018-01-03 16:35:21
 ::  face       (>_<)
 ::  weather    小雨转中雨 9℃/5℃ 东北风
-set _errorMsg=%~d0%~p0_errorMsg.bat
-if "%1"=="" (call _errorMsg %0 "paramCount NOT DEFINED") else (set paramCount=%1)
-if "%2"=="" (call _errorMsg %0 "objMethod NOT DEFINED") else (set objMethod=%2)
+set _errorMsg=%~d0%~p0_errorMsg
+if "%1"=="" (call %_errorMsg% %0 "paramCount NOT DEFINED") else (set paramCount=%1)
+if "%2"=="" (call %_errorMsg% %0 "objMethod NOT DEFINED") else (set objMethod=%2)
 (shift /1)& (shift /1)
 set errorMsg="objMethod[%objMethod%]: param%paramCount% NOT DEFINED"
 (if %paramCount% GEQ 1 if "%~1"=="" call %_errorMsg% %0 %errorMsg%)

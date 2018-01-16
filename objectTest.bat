@@ -1,5 +1,4 @@
-@echo off
-call object new obj
-%obj.fun1% 参数1
-%obj.fun2% 参数2
+@echo off& call loadF.bat _objNew
+call %_objNew% object obj
+%obj.type%
 pause>nul& goto :EOF

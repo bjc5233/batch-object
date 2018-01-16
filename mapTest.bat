@@ -1,5 +1,5 @@
-@echo off
-call map new mapObj
+@echo off& call loadF.bat _objNew
+call %_objNew% map mapObj
 %mapObj.type%
 echo ==================================
 echo put(1,123)

@@ -1,5 +1,5 @@
-@echo off
-call list new listObj
+@echo off& call loadF.bat _objNew
+call %_objNew% list listObj
 %listObj.type%
 echo ==================================
 echo add 123
