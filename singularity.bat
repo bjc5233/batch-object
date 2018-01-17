@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _objParams _errorMsg
+@echo off& call loadF.bat _objParams _objHelp _errorMsg
 ::说明
 ::  batch-singularity奇点对象
 ::  目前所有对象的顶级类, 没有实际意义, 主要用于模拟多层级继承
@@ -8,14 +8,16 @@
 ::  face       ≥﹏≤
 ::  weather    多云 14℃/6℃ 风
 set _parent=NULL
-set _singularity_functions=type
+set _%~n0_functions=help type
 if "%1"=="" goto :EOF
+if "%1"=="help" (call %_objHelp% %~n0 %~f0& goto :EOF)
 goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
 
 
 :_init
 ::[_init] [objectName]
+(call %_objParams% 1 %*)
 set %2._field_object_type=singularity
 set %2._functions=%_singularity_functions%
 for %%i in (%_singularity_functions%) do set "%2.%%i=call %~f0 %%i %2"

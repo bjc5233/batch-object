@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _objParams _true _false _errorMsg _objExtend
+@echo off& call loadF.bat _objParams _objHelp _true _false _errorMsg
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-map对象
@@ -9,17 +9,15 @@
 ::  face       ←_←
 ::  weather    小雨转中雨 9℃/6℃ 东南风
 set _parent=C:\path\bat\object\object.bat
-set _map_functions=help put get getPrint size sizePrint containsKey containsKeyPrint toString clear containsValue containsValuePrint remove
+set _%~n0_functions=help put get getPrint size sizePrint containsKey containsKeyPrint toString clear containsValue containsValuePrint remove
 if "%1"=="" goto :EOF
+if "%1"=="help" (call %_objHelp% %~n0 %~f0& goto :EOF)
 goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 
 
-:help
-echo available method: [%_map_functions%]
-pause>nul& goto :EOF
-
 :_init
 ::[_init] [mapObj]
+(call %_objParams% 1 %*)
 set %2._field_size=0
 set %2._field_object_type=map
 set %2._functions=%_map_functions%
