@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _objParams _objHelp _errorMsg
+@echo off& call loadF.bat _objParams _objHelp _objFunctions _errorMsg
 ::说明
 ::  batch-object对象
 ::规则
@@ -7,6 +7,7 @@
 ::    2.属性前缀_field_; 数据前缀_data_
 ::    3.size是原始函数, 需要增加额外的holder输出参数; sizePrint是简化的打印函数
 ::    4.函数名下应该书写函数描述, 以及参数列表. 这些信息会在调用[object help]时打印
+::    5._init方法中调用[call %_objFunctions% %2 %~n0 %~f0]会根据_functions创建[%listObj.help%]...快捷方法
 ::  继承相关
 ::    1.类级别定义[_parent]为父类文件路径
 ::    2.创建对象必须通过[call _objNew list listObj]才能继承到父类方法
@@ -33,9 +34,8 @@ goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 :_init
 ::[_init] [objectName]
 (call %_objParams% 1 %*)
-set %2._field_object_type=object
-set %2._functions=%_object_functions%
-for %%i in (%_object_functions%) do set "%2.%%i=call %~f0 %%i %2"
+set %2._field_type=object
+call %_objFunctions% %2 %~n0 %~f0
 goto :EOF
 
 
@@ -47,9 +47,9 @@ setlocal enabledelayedexpansion
 (
     echo objectName=%2
 	echo _field_size=!%2._field_size!
-	echo _field_object_type=!%2._field_object_type!
+	echo _field_type=!%2._field_type!
 	echo _functions=!%2._functions!
-	for %%i in (!%2._functions!) do echo %%i=call !%2._field_object_type! %%i
+	for %%i in (!%2._functions!) do echo %%i=call !%2._field_type! %%i
 	for /f "tokens=2* delims=.=" %%i in ('set %2._data_') do echo %%i=%%j
 )>"%~3"& endlocal & goto :EOF
 

@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _objParams _objHelp _true _false _errorMsg
+@echo off& call loadF.bat _objParams _objHelp _objFunctions _true _false _errorMsg
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-map对象
@@ -19,9 +19,8 @@ goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 ::[_init] [mapObj]
 (call %_objParams% 1 %*)
 set %2._field_size=0
-set %2._field_object_type=map
-set %2._functions=%_map_functions%
-for %%i in (%_map_functions%) do set "%2.%%i=call %~f0 %%i %2"
+set %2._field_type=map
+call %_objFunctions% %2 %~n0 %~f0
 goto :EOF
 
 
@@ -111,7 +110,7 @@ goto :EOF
 echo %2:
 echo {
 call echo     size:%%%2._field_size%%
-call echo     objectType:%%%2._field_object_type%%
+call echo     objectType:%%%2._field_type%%
 echo     {
 setlocal enabledelayedexpansion
 for /f "tokens=2* delims=.=" %%i in ('set %2._data_ 2^>nul') do set key=%%i& echo         !key:~6!:%%j

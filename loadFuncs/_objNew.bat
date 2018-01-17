@@ -13,9 +13,7 @@
 ::  face       ¦²( ¡ã ¡÷ ¡ã|||)¦õ
 ::  weather    ¶àÔÆ 14¡æ/6¡æ ·ç
 (call %~d0%~p0_objParams 1 %*)
-set _tree=
-set _treeIndex=0
-set _parent=%1
+set _tree=& set _treeIndex=0& set _parent=%1
 :_newLoop
 set _tree[%_treeIndex%]=%_parent%
 call %_parent%

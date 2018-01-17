@@ -1,4 +1,4 @@
-@echo off& call loadF.bat _objParams _objHelp _true _false _ifOr _errorMsg
+@echo off& call loadF.bat _objParams _objHelp _objFunctions _true _false _ifOr _errorMsg
 (call %_true%)& (call %_false%)
 ::说明
 ::  batch-list对象
@@ -19,9 +19,8 @@ goto :%1>nul 2>nul& (call %_errorMsg% %0 "method[%1] NOT DEFINED")
 ::[_init] [listObj]
 (call %_objParams% 1 %*)
 set %2._field_size=0
-set %2._field_object_type=list
-set %2._functions=%_list_functions%
-for %%i in (%_list_functions%) do set "%2.%%i=call %~f0 %%i %2"
+set %2._field_type=list
+call %_objFunctions% %2 %~n0 %~f0
 goto :EOF
 
 
@@ -165,7 +164,7 @@ if defined %2._data_%3 set %2._data_%3=%~4& goto :EOF
 echo %2:
 echo {
 call echo     size:%%%2._field_size%%
-call echo     objectType:%%%2._field_object_type%%
+call echo     objectType:%%%2._field_type%%
 echo     [
 set /a maxIndex=%2._field_size-1
 for /l %%i in (0,1,%maxIndex%) do call echo         %%%2._data_%%i%%
